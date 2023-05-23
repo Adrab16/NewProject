@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page de connexion</title>
+</head>
+<body>
+  <h1>Page de connexion</h1>
+
+  <form action="/api/login" method="POST">
+    <div>
+      <label for="username">Nom :</label>
+      <input type="text" id="nom" name="nom" required>
+    </div>
+
+    <div>
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" name="motdepasse" required>
+    </div>
+
+    <div>
+      <button type="submit">Se connecter</button>
+    </div>
+  </form>
+</body>
+</html>

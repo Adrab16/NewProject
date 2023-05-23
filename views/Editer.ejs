@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Editer</title>
+</head>
+<body>
+
+    <%= data %> 
+    <form action="/ajouterunmanga/edit/<%= data.id%>?_method=PUT" method="post">
+        <input type="hidden" name="_method" value="PUT">
+
+        <label for="titre">Titre :</label><br>
+        <input type="text" id="titre" name="titre" required value="<%= data.titre %>" />
+        <br>
+      
+        <label for="auteur">Auteur :</label><br>
+        <input type="text" id="auteur" name="auteur" required value="<%= data.auteur %>" />
+        <br>
+      
+        <label for="description">Description :</label><br>
+        <input type="text" id="description" name="description" required value="<%= data.description %>" />
+        <br>
+
+        <label for="anneedeparution">Année de Parution :</label><br>
+        <input type="text" id="anneedeparution" name="anneedeparution" required value="<%= data.anneedeparution %>" />
+        <br>
+      
+        <label for="genre">Genre:</label>
+        <select id="genre" name="genre" required value="<%= data.genre %>">
+          <option value="Action">Shonen</option>
+          <option value="Aventure">Shojo</option>
+          <option value="Comédie">Seinen</option>
+        </select><br><br>
+      
+        <input type="submit" value="Update data">
+      </form>
+
+    <form action="/ajouterunmanga/delete/<%= data.id%>?_method=DELETE" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+
+
+
+        <input type="submit" name="" id="" value="Supprimer">
+    
+    </form>
+
+    
+    
+
+</body>
+</html>
