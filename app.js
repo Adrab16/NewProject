@@ -6,6 +6,9 @@ var path = require('path');
 
 const bcrypt = require('bcrypt');
 
+const cors = require('cors');
+
+app.use(cors())
 
 // bodyparser
 var bodyParser = require('body-parser');
@@ -24,6 +27,13 @@ mongoose.connect(url,{
     UseUnifiedTopology: true
 }).then(console.log("MongoDB connected !"))
 .catch(err => console.log(err))
+
+// cookie parser
+
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+const {createToken, validateToken} = require("./JWT")
+
 
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'));
@@ -63,7 +73,7 @@ app.post('/submit-ajouterunmanga', function(req, res){
     })
     Data.save().then(() => {
         console.log("Data save successfully !");
-        res.redirect('/');
+        res.redirect('http://localhost:3000/');
     }).catch(err => { console.log(err)});
 
 });
@@ -72,7 +82,9 @@ app.get('/', function(req, res) {
     AjouterUnManga.find()
     .then(data =>{
         console.log(data);
-        res.render('Accueil', {data: data});
+        // res.render('Accueil', {data: data});
+        res.json(data);
+
 
     })
     .catch(err => console.log(err))
@@ -83,7 +95,8 @@ app.get('/ajouterunmanga/:id', function (req, res){
     AjouterUnManga.findOne({
         _id: req.params.id
     }).then(data =>{
-        res.render('Editer', {data: data});
+        // res.render('Editer', {data: data});
+        res.json(data);
     })
     .catch(err => console.log(err))
 });
@@ -128,12 +141,12 @@ app.post('/submit-inscription', function(req, res) {
     Data.save().then((data)=>{
         console.log('User saved !');
         // res.render('UserPage', {data: data});
-        res.redirect('/');
+        res.redirect('http://localhost:5000/Accueil')
     })
     .catch(err=>console.log(err));
 })
 app.get('/inscription', function(req, res) {
-    res.render('Inscription')
+    // res.render('Inscription')
 });
 app.get('/login', function(req, res) {
     res.render('Login');
@@ -146,10 +159,22 @@ app.post('/api/login', function(req, res) {
             {
                 res.send('No User found');
             }
+
+            const accessToken = createToken(user);
+
+            res.cookie("access-token", accessToken, {
+                maxAge: 60 * 60* 24 * 30,
+                httpOnly: true
+            })
+            // res.json("LOGGED IN !")
+            res.redirect("http://localhost:3000/Accueil")
+
+
+
             if(!bcrypt.compareSync(req.body.motdepasse,Inscription.motdepasse)){
                 res.send('Invalid password !')
             }
-            console.log('User found!');
+            // console.log('User found!');
                 res.redirect('/');
             // if(!user || user.password !== req.body.password )
             // {

@@ -30,27 +30,29 @@
   </nav>
   
   <div class="container mt-5">
-    <h1>Bienvenue sur notre site de mangas!</h1>
-    <p>Découvrez notre collection de mangas et ajoutez-en de nouveaux.</p>
+    <h1>Bienvenue sur MON site de mangas!</h1>
+    <p>Découvrez MA collection de mangas et ajoutez-en de nouveaux mais pas de la merde.</p>
 </div>
     
 
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">id</th>
         <th scope="col">Titre</th>
         <th scope="col">Auteur</th>
         <th scope="col">Année de Parution</th>
+        <th scope="col">Description</th>
+
       </tr>
     </thead>
     <tbody>
         <% data.forEach((ajouterunmanga)=>{ %>
       <tr>
-        <th scope="row"><%= ajouterunmanga.id %></th>
         <td><%= ajouterunmanga.titre %></td>
         <td><%= ajouterunmanga.auteur %></td>
         <td><%= ajouterunmanga.anneedeparution %></td>
+        <td><%= ajouterunmanga.description %></td>
+
         <td><a href="/ajouterunmanga/<%= ajouterunmanga.id %>">Editer</a></td>
         <td>
             <form action="/ajouterunmanga/delete/<%= ajouterunmanga.id%>?_method=DELETE" method="post">
