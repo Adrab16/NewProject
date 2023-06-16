@@ -10,6 +10,8 @@ const cors = require('cors');
 
 app.use(cors())
 
+require('dotenv').config();
+
 // bodyparser
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -17,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.set('view engine', 'ejs');
 
 var mongoose = require('mongoose');
-const url = "mongodb+srv://Adri:Adrie123@cluster0.xhtxcgc.mongodb.net/AjouterUnManga?retryWrites=true&w=majority"
+const url = process.env.DATABASE_URL
 const AjouterUnManga = require('./models/AjouterUnManga');
 const Inscription = require('./models/Inscription');
 
@@ -141,17 +143,17 @@ app.post('/submit-inscription', function(req, res) {
     Data.save().then((data)=>{
         console.log('User saved !');
         // res.render('UserPage', {data: data});
-        res.redirect('http://localhost:5000/Accueil')
+        res.redirect('http://localhost:3000/')
     })
     .catch(err=>console.log(err));
 })
 app.get('/inscription', function(req, res) {
     // res.render('Inscription')
 });
-app.get('/login', function(req, res) {
+app.get('/SeConnecter', function(req, res) {
     res.render('Login');
 });
-app.post('/api/login', function(req, res) {
+app.post('/api/SeConnecter', function(req, res) {
     Inscription.findOne({
         nom: req.body.nom
     }).then((Inscription) => {
